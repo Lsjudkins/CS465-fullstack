@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');  
 const host = process.env.DB_HOST || '127.0.0.1';  
 const dbURI = `mongodb://${host}/travlr`;  
-const readLine = require('readline');  
-  
+const readLine = require('readline');
+
 // Build the connection string and set the connection timeout.   
 // timeout is in milliseconds.  
 const connect = () => {  
@@ -24,7 +24,6 @@ mongoose.connection.on('disconnected', () => {
 });  
   
 // Windows specific listner 
-const readLine = require ('readline');
 if(process.platform === 'win32'){  
     const r1 = readLine.createInterface ({  
         input: process.stdin,  
