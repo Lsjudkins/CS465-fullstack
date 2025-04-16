@@ -58,8 +58,10 @@ process.once('SIGUSR2', () => {
     gracefulShutdown('app shutdown');  
     process.exit(0);  
     });  
+
     // Make initial connection to DB  
     connect();  
+
     // Import Mongoose schema  
-    require('./travlr');  
-    module.exports = mongoose; 
+    require('./models/travlr');  
+    require('./models/user');
