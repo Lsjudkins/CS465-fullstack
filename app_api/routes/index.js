@@ -1,9 +1,12 @@
+require('dotenv').config();
+
 const express = require('express'); // Express app
 const router = express.Router(); // Router logic
-const jwt = require('express-jwt');
+const { expressjwt: jwt } = require('express-jwt');
 // const jwt = require('jsonwebtoken');
 const auth = jwt({
-    secret: process.env.JWT_SECRET,
+    secret: process.env.JWT_SECRET || 'fallback_secret_key',
+    algorithms: ['HS256'],
     userProperty: 'payload'
 });
 

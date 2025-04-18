@@ -4,7 +4,7 @@ const apiOptions = {
 }
 
 /* render travel list view */
-const renderTravelList = (req, res, responseBody) => {
+const rendertravelList = (req, res, responseBody) => {
     let message = null;
     let pageTitle = process.env.npm_package_description + ' - Travel';
 
@@ -54,6 +54,6 @@ const travelList = (req, res) => {
 }
 
 module.exports = {
-    travelList,
     rendertravelList,
+    travelList
 };
