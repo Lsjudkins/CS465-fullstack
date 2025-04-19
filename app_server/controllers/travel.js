@@ -36,6 +36,6 @@ const travel = async function(req, res, next) {
     // console.log('TRAVEL CONTROLLER AFTER RENDER');
 };
 
-module.exports = {
-    travel
+module.exports.travelList = function(req, res) {
+    res.render('travel', { title: 'Travel List'});
 };

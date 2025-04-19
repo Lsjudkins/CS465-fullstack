@@ -22,7 +22,7 @@ export class EditTripComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private tripService: TripDataService
-  ) {}
+  ) { }
 
   ngOnInit() : void{
 
@@ -67,16 +67,14 @@ export class EditTripComponent implements OnInit {
     },
     error: (error: any) => {
         console.log('Error: ' + error);
-      }
     })
 }
 
-public onSubmit()
-{
+onSubmit() {
   this.submitted = true;
 
-  if(this.editForm.valid)
-  {
+  if(this.editForm.valid) {
+
     this.tripDataService.updateTrip(this.editForm.value)
     .subscribe({
       next: (value: any) => {
@@ -85,11 +83,13 @@ public onSubmit()
       },
       error: (error: any) => {
         console.log('Error: ' + error);
-      }
-    })
+    });
   }
 }
 
   // get the for short name to access the form fields
-  get f() { return this.editForm.controls; }
+  get f() { 
+    return this.editForm.controls; 
+  }
+
 }
