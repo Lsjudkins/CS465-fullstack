@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 // import { trips } from '../data/trips';
 import { TripCardComponent } from '../trip-card/trip-card.component';
 
-import { Trip } from '../models/trip';
 import { TripDataService } from '../services/trip-data.service';
+import { Trip } from '../models/trip';
 
 import { Router } from '@angular/router';
 
@@ -21,10 +21,11 @@ export class TripListingComponent implements OnInit {
   trips!: Trip[];
   message: string = '';
 
-  constructor(private tripDataService: TripDataService,
-              private router: Router) {
+  constructor(
+    private tripDataService: TripDataService,
+    private router: Router
+    ) {
     console.log('trip-listing constructor');    
-  
   }
 
   public addTrip(): void {
