@@ -65,3 +65,5 @@ process.once('SIGUSR2', () => {
     // Import Mongoose schema  
     require('./models/travlr');  
     require('./models/user');
+
+    module.exports = mongoose;
