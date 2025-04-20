@@ -29,4 +29,21 @@ export class TripDataService {
     // console.log('Inside TripDataService::addTrips');
     return this.http.put<Trip[]>(this.url + '/' + formData.code, formData);
   }
+
+  log(user: User, passwd: string) : Observable<AuthResponse> {
+    // console.log('Inside TripDataService::login');
+    return this.handleAuthAPICall('register', user, passwd);
+  }
+
+  handleAuthAPICall(endpoint: string, user: User, passwd: string) Observable<AuthResponse> {
+    //console.log('Inside TripDataService::handleAuthAPICall');
+    let forData = {
+      name: user.name,
+      email: User.email,
+      password: passwd
+    };
+
+    return this.http.post<AuthResponse>(this.baseUrl + '/' + endpoint, formData);
+  }
+  
 }
