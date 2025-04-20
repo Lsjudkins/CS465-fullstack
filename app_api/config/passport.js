@@ -3,24 +3,26 @@ const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
 
-passport.use(new LocalStrategy({
+passport.use(new LocalStrategy(
+    {
     usernameField: 'email'
     },
-    (username, password, done) => {
-        User.findOne({ email: username }, (err, user) => {
-            if (err) { return done(err); }
-            if (!user) {
-                return done(null, false, {
-                    message: 'Incorrect username.'
-                });
-            }
-            if (!user.validPassword(password)) {
-                return done(null, false, {
-                    message: 'Incorrect password.'
-                });
-            }
-            return done(null, user);
+    async(username, password, done) => {
+        const q = await User
+            .findOne({ email: username })
+            .exec();
+            // Uncomment the following line to show results of querey
+            // on the console
+            // console.log(q);
 
-        });
+            if (!q) // Tf the DB returned no records, the user doesn't exsit
+            {
+                return done(null, false, {message: 'Incorrect Username'});
+            }
+            if(!q.validPassword(password)) // Validate password
+            {
+                return done(null, false, { message: 'Incorrect Password'});
+            }
+            return done(null, q); // Everything is OK, return user object
     }
 ));

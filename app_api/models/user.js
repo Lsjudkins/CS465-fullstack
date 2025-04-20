@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     salt: String
 });
 
+// Method to set the pasword on the record.
 userSchema.methods.setPassword = function(password){
     console.log('Inside app_api/database/models/user.js#setPassword');
     this.salt = crypto.randomBytes(16).toString('hex');
@@ -23,6 +24,7 @@ userSchema.methods.setPassword = function(password){
         1000, 64, 'sha512').toString('hex');
 };
 
+// Method to compare entered password against stored hash
 userSchema.methods.validPassword = function(password) {
     console.log('Inside app_api/database/models/user.js#validPassword');
     var hash = crypto.pbkdf2Sync(password, 
@@ -30,7 +32,8 @@ userSchema.methods.validPassword = function(password) {
     return this.hash === hash;
 };
 
-userSchema.methods.generateJwt = function() {
+// Methos to generate a JSON Web Token for the current record
+userSchema.methods.generateJWT = function() {
     console.log('Inside app_api/database/models/user.js#generateJWT');
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);
@@ -41,6 +44,7 @@ userSchema.methods.generateJwt = function() {
         name: this.name,
         exp: parseInt(expiry.getTime() / 1000, 10),
     }, process.env.JWT_SECRET); // DO NOT KEEP YOUR SECRET IN THE CODE!
+    { expiresIn: '1h' };
 };
 
 module.exports=mongoose.model('users', userSchema);

@@ -8,7 +8,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var handlebars = require('hbs');
-const passport = require('passport');
+var passport = require('passport');
 
 // Define routers
 var indexRouter = require('./app_server/routes/index');
@@ -29,6 +29,9 @@ handlebars.registerPartials(path.join(__dirname + '/app_server/views/partials'))
 // Bring in the database
 require('./app_api/models/db');
 
+// Bring in our environment file, environment variable capabilties
+require('dotenv').config();
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -39,7 +42,7 @@ app.use(passport.initialize());
 // Enable CORE
 app.use('/api', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
 });
@@ -69,7 +72,9 @@ app.use(function(err, req, res, next) {
 // Catch unauthorized error and create 401
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
-    res.status(401).json({ message: err.name + ": " + err.message });
+    res
+      .status(401)
+      .json({ message: err.name + ": " + err.message });
   }
 });
 
